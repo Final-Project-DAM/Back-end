@@ -28,6 +28,13 @@ function getAll(req, res) {
     .catch((err) => console.log('Error occured, ' + err));
 }
 
+function viewAllPreferred(req, res) {
+  User.find({ email: req.user.email })
+    .populate('favorites')
+    .then((userPopulated) => res.send(userPopulated[0]))
+    .catch((err) => res.status(400).send(err));
+}
+
 async function getOne(req, res) {
   console.log(req.query.event);
   await Event.findOne({ _id: req.query.event }).exec()
@@ -113,7 +120,7 @@ function postEvent(req, res) {
 }
 
 function postPrefered(req, res) {
-  User.findOne({ email: req.user.mail })
+  User.findOne({ email: req.user.email })
     .then((user) => {
       //coment prueb
       //antes de post se deberia comprobar si existe 
@@ -125,7 +132,7 @@ function postPrefered(req, res) {
     .catch((err) => res.status(400).send(err));
 }
 function delPrefered(req, res) {
-  User.findOne({ email: req.user.mail })
+  User.findOne({ email: req.user.email })
     .then((user) => {
       // user.favorites = user.favorites.filter((e) => !e.equals(req.params.id));
       user.favorites = user.favorites.filter((e) => e + '' !== req.params.id);
@@ -135,12 +142,7 @@ function delPrefered(req, res) {
     .catch((err) => res.status(400).send(err));
 }
 
-function viewAllPreferred(req, res) {
-  User.find({ email: req.user.mail })
-    .populate('favorites')
-    .then((userPopulated) => res.send(userPopulated[0]))
-    .catch((err) => res.status(400).send(err));
-}
+
 
 module.exports = {
   getOne,
