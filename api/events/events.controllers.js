@@ -36,10 +36,8 @@ function viewAllPreferred(req, res) {
 }
 
 async function getOne(req, res) {
-  console.log(req.query.event);
   await Event.findOne({ _id: req.query.event }).exec()
   .then((response) => {
-    console.log(response);
     res.send(response);
   });
 

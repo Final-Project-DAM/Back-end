@@ -15,6 +15,6 @@ router.post('/event/:id/preferred', verifyToken, controller.postPrefered);
 
 router.delete('/event/:id/preferred', verifyToken, controller.delPrefered);
 
-router.get('/filter', controller.getByQuery);
+router.get('/filter/:filter', controller.getByQuery);
 
 module.exports = router;
